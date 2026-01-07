@@ -86,6 +86,14 @@ const handleUpdate = (index, newContent) => {
   saveToLocal();
 };
 
+// 切换完成状态逻辑
+const handleToggle = (index) => {
+  // 注意：如果是通过 filteredNotes 渲染的，建议通过 ID 来查找原数组索引更安全
+  // 这里简化演示，直接操作 notes
+  notes.value[index].done = !notes.value[index].done;
+  saveToLocal(); // 每次修改都要保存，否则刷新页面状态会丢失
+};
+
 const saveToLocal = () => {
   localStorage.setItem('vue_notes', JSON.stringify(notes.value));
 };
@@ -115,6 +123,7 @@ onMounted(fetchNotes);
         :index="index"
         @delete="handleDelete"
         @update="handleUpdate"
+        @toggle="handleToggle"
       />
     </ul>
   </div>
